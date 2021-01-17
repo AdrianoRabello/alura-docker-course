@@ -1,0 +1,20 @@
+version: "3.5"
+services:
+  toncat:   
+    ports: 
+      - 80:8081
+    container_name: tomcat
+    image: tomcat
+    volumes:
+          - ./mount/webapps:/usr/local/tomcat/webapps
+    networks:
+      - tomcat
+volumes:
+  tomcat-volume:
+
+
+networks: 
+  tomcat:
+    name: minha-rede
+    driver: bridge
+

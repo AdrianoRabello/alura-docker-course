@@ -1,0 +1,49 @@
+
+- ** @author Adriano Rabello
+- commands                                                                                  |                description 
+
+
+- docker port <cintainer-id>                                                                    ->  to show container ports used
+- docker rmi <image-id>                                                                         ->  to remove especific image
+- docker-comtainer prune                                                                        ->  to remove all sptoped container 
+- docker run -d -P <image-id>                                                                   ->  -P to create aleatory por inside container and to permite container open port to work with app inside itself
+- docker run -d -P --name <container-name>                                                      -> --name to define name
+- docker ps -q                                                                                  -> to retorna only containers ids 
+- docker stop -t 0 $(<comands to run >)                                                         -> -t define time to stop container. $(<commands>) permit to run comands inside it.
+- docker run -it -v <host direttory:container direcotry> <image id>                             ->  run container ang get shell inside it. 
+- run --name node-container -d -p 80:3000 -v "$(pwd):/var/www" -w "/var/www" node npm start     -> run binding ports in node container mapping directory
+- docker run --name <container name> --network <network name>                                   -> to set container in especifc network 
+- docker stop <container name >                                                                 -> to stop container by name
+
+-                                                                   IMAGES
+
+                                                <- WE CAN BUILD OUR OWN IMAGES REFERECING TOHERS BASES IMAGES ->
+
+- docker build -f Dockerfile -t 19031988/node-image .                                           -> build image in Dockerfile -t setting tag name . in actual directory  
+- docker run -d --name container-test -p 8080:3000 19031988/node-image                          -> run container -d detech  mode, --name <container name>, -p port binding <image reference>
+
+
+
+
+
+-                                                  INSIDE CONTAINER 
+
+
+- hostname -i                                                   -> to show host ip address
+- apt-get update && apt-get install -y iputils-ping             -> to update container and to install ping libery to use like command
+
+
+
+
+
+
+
+-                                                                    NETWORKS 
+
+- docker network create --driver bridge <network-name>              -> i need to create my own network to comunicate better with others containers 
+- docker run --name segundo-ubunto -it --network minha-rede ubunto  -> creating container and settins especific network 
+- docker network inspect <network name>                           -> to see every containers in in networks name 
+-  
+
+
+
