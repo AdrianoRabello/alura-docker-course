@@ -14,6 +14,12 @@
 - run --name node-container -d -p 80:3000 -v "$(pwd):/var/www" -w "/var/www" node npm start     -> run binding ports in node container mapping directory
 - docker run --name <container name> --network <network name>                                   -> to set container in especifc network 
 - docker stop <container name >                                                                 -> to stop container by name
+- docker-compose ps                                                                             -> to see services tunning where docker-compose is.
+- docker-compose down                                                                           -> stop every containers created by docker compose and remove evrery one. 
+- docker-compose build                                                                          -> create docker-compose file. Pull images and prepare to up. 
+- docker volume create <volume name>
+
+
 
 -                                                                   IMAGES
 
@@ -21,6 +27,8 @@
 
 - docker build -f Dockerfile -t 19031988/node-image .                                           -> build image in Dockerfile -t setting tag name . in actual directory  
 - docker run -d --name container-test -p 8080:3000 19031988/node-image                          -> run container -d detech  mode, --name <container name>, -p port binding <image reference>
+- docker rmi <image name>                                                                       -> remove image by name 
+- docker history <image name>                                                                   -> to see all image dependencies 
 
 
 
@@ -42,8 +50,8 @@
 
 - docker network create --driver bridge <network-name>              -> i need to create my own network to comunicate better with others containers 
 - docker run --name segundo-ubunto -it --network minha-rede ubunto  -> creating container and settins especific network 
-- docker network inspect <network name>                           -> to see every containers in in networks name 
--  
+- docker network inspect <network name>                             -> to see every containers in in networks name 
+- docker network conneck <network name> <container name>            -> to configure container in especific network 
 
 
 
