@@ -2,11 +2,9 @@ version: "3.5"
 services:
   toncat:   
     ports: 
-      - "8081:8081"
+      - "80:8081"
     container_name: tomcat
-    build: 
-      dockerfile: .
-      context: .
+    image: tomcat
     volumes:
           - ./mount/webapps:/usr/local/tomcat/webapps
     networks:
