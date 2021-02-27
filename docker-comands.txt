@@ -1,6 +1,6 @@
 
 - ** @author Adriano Rabello
-- commands                                                                                  |                description 
+------------------------------------------------------------------------ DOCKER COMMANDS  ------------------------------------------------------------------------------                                                                                |                description 
 
 
 - docker port <cintainer-id>                                                                    ->  to show container ports used
@@ -21,11 +21,11 @@
 
 
 
--                                                                   IMAGES
+------------------------------------------------------------------------    IMAGES ------------------------------------------------------------------------------
 
                                                 <- WE CAN BUILD OUR OWN IMAGES REFERECING TOHERS BASES IMAGES ->
 
-- docker build -f Dockerfile -t 19031988/node-image .                                           -> build image in Dockerfile -t setting tag name . in actual directory  
+- docker build   -t <image taga name> <Dockerfile path with image>              -> build image in Dockerfile -t setting tag name . in actual directory  
 - docker run -d --name container-test -p 8080:3000 19031988/node-image                          -> run container -d detech  mode, --name <container name>, -p port binding <image reference>
 - docker rmi <image name>                                                                       -> remove image by name 
 - docker history <image name>                                                                   -> to see all image dependencies 
@@ -34,7 +34,7 @@
 
 
 
--                                                  INSIDE CONTAINER 
+------------------------------------------------------------------------  INSIDE CONTAINER ------------------------------------------------------------------------------
 
 
 - hostname -i                                                   -> to show host ip address
@@ -46,7 +46,7 @@
 
 
 
--                                                                    NETWORKS 
+------------------------------------------------------------------------- NETWORKS ------------------------------------------------------------------------------------
 
 - docker network create --driver bridge <network-name>              -> i need to create my own network to comunicate better with others containers 
 - docker run --name segundo-ubunto -it --network minha-rede ubunto  -> creating container and settins especific network 
@@ -55,3 +55,46 @@
 
 
 
+
+
+------------------------------------------------------------------------------ SWARM -------------------------------------------------------------------------------------
+
+- docker-machine create -d virtualbox <vmname>                                  -> to create a vm into virtual box 
+- docker swarm init --advertise-addr 172.17.0.1 --listen-addr 0.0.0.0           -> create a swarm. i need to pass ip. 
+- docker swarm join-token worker                                                -> to show command to add in swarm 
+- docker swarm join-token manager                                               -> to add a manger in swarm 
+- docker node ls                                                                -> to list all nodes
+- docker-machine <vm name> bash                                                 -> to access vm 
+- docker swarm join-token worker                                                -> to show token to join in swarm 
+- netstat -ntulp | grep dockerd                                                 -> after login in node thisshow information
+- docker network create -d overlay interna                                      -> to create network 
+- docker-machine en <machine name >                                             -> to see configuration of machine
+- docker swarm leave                                                            -> to change node status to down (this comand no remove swarm)
+- docker node rm <ID>                                                           -> this command need tobe written inside manger to remove node from swarm 
+- docker node inspect <node name >                                              -> to get iformation of node 
+
+
+
+----------------------------------------------------------------------------  INSIDE MANAGER ------------------------------------------------------------------------------
+
+- docker service create -p <external port : internal port> <image reference>                                > to build a service container.
+- docker service create -p <external port : internal port> <image reference>  --mode global                 -> this command'll create service in every node
+- docker service create --name <service name> -p <external:internal> --replicas <number>  <image> sleep 1d  ->  create service with port and replica number with image and to get up for 1 day  
+- docker service ls                                                                                         -> to list all services 
+- docker service ps <service id >                                                                           -> to how information of service 
+- docker node demote <node name>                                                                            -> to down manager to worker
+- docker node ls --format "{{<column name>}}"                                                               -> to list node with specific informations 
+- docker service rm <service id>                                                                            -> remove specific service by id    
+- docker service rm $(docker service ls -q)                                                                 -> passing command inside "$(<command here>)"
+- docker node update --availability drain <manager name >                                                   -> to configure managers not recive container like worker 
+- docker node update --availability active <manager name >                                                  -> to active manager to recive container like worker
+- docker service update --constraint-add node.role==worker <service id >                                    -> to configure service not run in manager node
+- docker service update --replicas <replicas number> <service id>                                           -> to relicate service x replicas nunber. this command ll to create the same service in others nodes 
+- 
+
+----------------------------------------------------------------------------   CONFIGURATIONS ------------------------------------------------------------------------------
+- /var/lib/docker/swarm                                                                 -> this folder contais data to restore swarm. to get in we need to write 'sudo su'.
+- cp -r var/lib/docker/swarm backup                                                     -> to create backup to backup folder 
+- cp -r backup/* /var/lib/docker/swarm                                                  -> to copy backup folder to directory to init other cluster with data
+- docker swarm init --force-new-cluster --advertise-addr <ip to create >                -> forcing to create a new cluster with backup data
+- 
